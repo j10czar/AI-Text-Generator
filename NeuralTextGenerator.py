@@ -121,11 +121,11 @@ def runSimulation(wordTree,sortedWords,wordNum):
             wordNum -= sentenceNum
         print(output)
 #intro sequence
-print("Text generation nerual net")
+print('-----------')
+print("Basic AI Text Generator")
 print("By Jason Tenzcar")
 print('-----------')
 print("What file would you like to generate text from?")
-print('type "multiple" to generate a hybrid from 2 files')
 print("")
 print("")
 
@@ -148,7 +148,7 @@ print("")
 print("")    
 #takes and processes user input
 while(True):
-    user_choice = input('Type a number to choose or type "hybrid" for hybrid generation between 2 files')
+    user_choice = input('Type the file number to generate text or type multiple file numbers seperated by "/" for hybrid generation.')
     print("")
     if user_choice.isdigit() and int(user_choice)-1<=len(txt_files):
         #opens text file(s) for reading and puts them into a useable string
@@ -157,28 +157,16 @@ while(True):
         file = open(textInput,'r')
         inputText = filter(re.split(' |\n', file.read())) 
         break
-    elif user_choice=='hybrid':
-
-        while True:
-            optionOne = input("What is the first file you would like to use?")
-            if optionOne.isdigit() and int(optionOne)-1<=len(txt_files):
-                break
-            else:
-                print('invalid input')
-        while True:
-            optionTwo = input("What is the second file you would like to use?")
-            if optionTwo.isdigit() and int(optionTwo)-1<=len(txt_files):
-                break
-            else:
-                print('invalid input')
-        #opens text file(s) for reading and puts them into a useable string
-        textOne = txt_files[int(optionOne)-1]
-        textTwo = txt_files[int(optionTwo)-1]
+    elif len(user_choice.split('/'))>1:
+        choices = user_choice.split('/')
         print('You are now on hybrid mode...')
-        print('generating word tree from '+str(textOne)+' and '+str(textTwo)+'...')
-        fileOne = open(textOne,'r')
-        fileTwo = open(textTwo,'r')
-        inputText = filter(re.split(' |\n', fileOne.read())) + filter(re.split(' |\n', fileTwo.read()))
+        print('generating word tree from: ')
+        inputText = []
+        for choice in choices:
+            if choice.isdigit and int(choice)<len(txt_files)+1:
+                print(choice+"- "+txt_files[int(choice)-1])
+                openedText = open(txt_files[int(choice)-1],'r')
+                inputText += filter(re.split(' |\n', openedText.read()))  
         break
     else:
         print('invalid input')        
