@@ -10,7 +10,7 @@ Very basic AI text generator that allows you to create computer generated senten
 
 ## Getting Started
 
-- Download the ZIP file and add whatever txt files you want into the project folder. Run the TextGenerator.py file and select what file you want to generate text from.
+- Download and extract the ZIP file and add whatever txt files you want into the project folder. Run the TextGenerator.py file and select what file you want to generate text from.
 
 
 
