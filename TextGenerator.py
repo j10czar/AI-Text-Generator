@@ -124,7 +124,7 @@ def runSimulation(wordTree,sortedWords,wordNum):
 #intro sequence
 print('-----------')
 print("Basic AI Text Generator")
-print("By Jason Tenzcar")
+print("By Jason Tenczar")
 
 while True:
     print('-----------')
@@ -183,10 +183,10 @@ while True:
 
 
     #populates wordTree with corresponding words
-    print('populating tree with unique words...')
+    print('Populating tree with unique words...')
     populateTree(sortedText)
     populateWords(inputText, wordTree)
-    print('tree has been populated with '+str(len(sortedText))+' unique words')
+    print('Tree has been populated with '+str(len(sortedText))+' unique words.')
 
 
 
