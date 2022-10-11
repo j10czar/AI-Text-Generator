@@ -7,12 +7,13 @@ import os
 
 
 
-#change these before running
-#modify project dir in order for the program to read in text files
 wordTree = {}
+
+#you can change these if you would like
 blockedWords = []
 fillerWords = []
-# project_dir = r'C:\Users\jasea\VSCodeRepos\Basic-AI-Text-Generator'
+
+
 project_dir = os.path.dirname(os.path.realpath(__file__))
 
 #adds words into word tree from w 
@@ -124,85 +125,86 @@ def runSimulation(wordTree,sortedWords,wordNum):
 print('-----------')
 print("Basic AI Text Generator")
 print("By Jason Tenzcar")
-print('-----------')
-print("What file would you like to generate text from?")
-print("")
-print("")
 
-
-#reads in all folders in project dir
-folder_dir = os.listdir(os.path.expanduser(project_dir))
-
-txt_files = []
-
-for file in folder_dir:
-    if file[len(file)-4:] == '.txt':
-        txt_files.append(file)
-
-print_num = 1
-for file in txt_files:
-    print(str(print_num)+'- '+file)
-    print_num+=1
-
-print("")
-print("")    
-#takes and processes user input
-while(True):
-    user_choice = input('Type the file number to generate text or type multiple file numbers seperated by "/" for hybrid generation.')
+while True:
+    print('-----------')
+    print("What file would you like to generate text from?")
     print("")
-    if user_choice.isdigit() and int(user_choice)-1<=len(txt_files):
-        #opens text file(s) for reading and puts them into a useable string
-        textInput = txt_files[int(user_choice)-1]
-        print('generating word tree from '+str(textInput)+'...')
-        file = open(textInput,'r')
-        inputText = filter(re.split(' |\n', file.read())) 
-        break
-    elif len(user_choice.split('/'))>1:
-        choices = user_choice.split('/')
-        print('You are now on hybrid mode...')
-        print('generating word tree from: ')
-        inputText = []
-        for choice in choices:
-            if choice.isdigit and int(choice)<len(txt_files)+1:
-                print(choice+"- "+txt_files[int(choice)-1])
-                openedText = open(txt_files[int(choice)-1],'r')
-                inputText += filter(re.split(' |\n', openedText.read()))  
-        break
-    else:
-        print('invalid input')        
-#opens text file(s) for reading and puts them into a useable string
+    print("")
 
 
+    #reads in all folders in project dir
+    folder_dir = os.listdir(os.path.expanduser(project_dir))
 
-sortedText = unique(inputText)
-sortedText.sort()
+    txt_files = []
 
+    for file in folder_dir:
+        if file[len(file)-4:] == '.txt':
+            txt_files.append(file)
 
+    print_num = 1
+    for file in txt_files:
+        print(str(print_num)+'- '+file)
+        print_num+=1
 
-#populates wordTree with corresponding words
-print('populating tree with unique words...')
-populateTree(sortedText)
-populateWords(inputText, wordTree)
-print('tree has been populated with '+str(len(sortedText))+' unique words')
-
-
-
-
-
-running = True
-while(running):
-    userInput = input('Press enter to generate sentence or type number of words you want in generation.')
-    if userInput == '':
-        print('__________________')
-        runSimulation(wordTree,sortedText,'sentence')
-        print('__________________')
-    elif userInput == 'e':
-        running = False
-
-    else:
-        if userInput.isdigit():
-            print('__________________')
-            runSimulation(wordTree,sortedText,int(userInput)-1)
-            print('__________________')
+    print("")
+    print("")    
+    #takes and processes user input
+    while(True):
+        user_choice = input('Type the file number to generate text or type multiple file numbers seperated by "/" for hybrid generation.')
+        print("")
+        if user_choice.isdigit() and int(user_choice)-1<=len(txt_files):
+            #opens text file(s) for reading and puts them into a useable string
+            textInput = txt_files[int(user_choice)-1]
+            print('generating word tree from '+str(textInput)+'...')
+            file = open(textInput,'r')
+            inputText = filter(re.split(' |\n', file.read())) 
+            break
+        elif len(user_choice.split('/'))>1:
+            choices = user_choice.split('/')
+            print('You are now on hybrid mode...')
+            print('generating word tree from: ')
+            inputText = []
+            for choice in choices:
+                if choice.isdigit and int(choice)<len(txt_files)+1:
+                    print(choice+"- "+txt_files[int(choice)-1])
+                    openedText = open(txt_files[int(choice)-1],'r')
+                    inputText += filter(re.split(' |\n', openedText.read()))  
+            break
         else:
-            print('please type a number or "e" to exit')
+            print('invalid input')        
+    #opens text file(s) for reading and puts them into a useable string
+
+
+
+    sortedText = unique(inputText)
+    sortedText.sort()
+
+
+
+    #populates wordTree with corresponding words
+    print('populating tree with unique words...')
+    populateTree(sortedText)
+    populateWords(inputText, wordTree)
+    print('tree has been populated with '+str(len(sortedText))+' unique words')
+
+
+
+
+
+
+    while(True):
+        userInput = input('Press enter to generate sentence or type number of words you want in generation. Type "r" to reselect file input.')
+        if userInput == '':
+            print('__________________')
+            runSimulation(wordTree,sortedText,'sentence')
+            print('__________________')
+        elif userInput == 'r':
+            break
+        else:
+            if userInput.isdigit():
+                print('__________________')
+                runSimulation(wordTree,sortedText,int(userInput)-1)
+                print('__________________')
+            else:
+                print('please type a number.')
